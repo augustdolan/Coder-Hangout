@@ -1,16 +1,16 @@
-const app = require('express')();
+const express = require('express');
+const app = express();
 const http = require('http').createServer(app);
 const io = require('socket.io')(http);
 const PORT = 3000;
 const path = require('path');
 
-app.get('/', (req, res) => {
-  res.sendFile(path.resolve(__dirname, '..', 'client', 'dist', 'index.html'))
-})
+app.use(express.static(path.join(__dirname, '..', 'client', 'dist')))
 
 io.on('connection', (socket) => {
   console.log('a user connected');
   socket.on('chat message', (msg) => {
+    console.log(msg)
     io.emit('chat message', msg);
   })
   socket.on('disconnect', () => {
