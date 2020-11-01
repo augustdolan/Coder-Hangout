@@ -1,89 +1,49 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import io from 'socket.io-client';
+import Messages from './Messages.jsx';
 
-const io = require('socket.io-client');
 const socket = io('http://localhost:3000');
 
-function App() {
-
-  const [messageCount, setMessageCount] = useState([]);
-  const [theme, setTheme] = useState('dark');
-  const [inRoom, setInRoom] = useState(false);
-
-   useEffect(() => {
-
-    if(inRoom) {
-      console.log('joining room');
-      socket.emit('room', {room: 'test-room'});
-    }
-
-    return () => {
-      if(inRoom) {
-        console.log('leaving room');
-        socket.emit('leave room', {
-          room: 'test-room'
-        })
-      }
-    }
-  });
+const App = (props) => {
+  const [ message, setMessage ] = useState('');
+  const [ allMessages, setAllMessages ] = useState([]);
+  const [ numTest, setNumTest ] = useState(0);
+  const allMessagesRef = useRef(allMessages);
 
   useEffect(() => {
-    socket.on('receive message', payload => {
-      setMessageCount(messageCount.concat('1'));
-    });
-    console.log(messageCount);
-  }, []); //only re-run the effect if new message comes in
+    allMessagesRef.current = allMessages;
+  }, [allMessages])
 
-  const handleSetTheme = () => {
-    let newTheme;
-    (theme === 'light')
-      ? newTheme = 'dark'
-      : newTheme = 'light';
-    console.log('new theme: ' + newTheme);
-    setTheme(newTheme);
+  useEffect(() => {
+    socket.on('chat message', (msg) => {
+      setAllMessages(allMessagesRef.current.concat(msg))
+    })
+    return () => socket.disconnect();
+  }, [])
+
+
+
+  const handleChange = (e) => {
+    e.preventDefault();
+    setMessage(e.target.value);
   }
 
-  const handleInRoom = () => {
-    inRoom
-      ? setInRoom(false)
-      : setInRoom(true);
-  }
-
-  const handleNewMessage = () => {
-    console.log('emitting new message');
-    socket.emit('new message', {
-      room: 'test-room'
-    });
-    setMessageCount(messageCount.concat(['1']));
-    console.log(messageCount);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    socket.emit('chat message', message);
+    setMessage('');
   }
 
   return (
-    <div className={`App Theme-${theme}`}>
-      <header className="App-header">
-
-        <h1>
-          {inRoom && `You Have Entered The Room` }
-          {!inRoom && `Outside Room` }
-        </h1>
-
-        <p>{messageCount} messages have been emitted</p>
-
-        {inRoom &&
-        <button onClick={() => handleNewMessage()}>
-          Emit new message
-        </button>
-        }
-
-        <button onClick={() => handleSetTheme()}>
-          Toggle Theme
-        </button>
-
-        <button onClick={() => handleInRoom()}>
-          {inRoom && `Leave Room` }
-          {!inRoom && `Enter Room` }
-        </button>
-
-      </header>
+    <div>
+      <Messages allMessages={allMessages} />
+      <form onSubmit={(e, socket) => handleSubmit(e, socket)}>
+        <label>
+          Message:
+          <input type="test" value={message} onChange={handleChange} />
+        </label>
+        <input type="submit" value="Submit" />
+      </form>
     </div>
   );
 }
