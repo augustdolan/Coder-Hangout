@@ -8,7 +8,7 @@ const VideoSearch = (props) => {
     e.preventDefault();
     setQuery(e.target.value);
   }
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     axios.get('/api/youtube', {
       params: {
@@ -18,7 +18,7 @@ const VideoSearch = (props) => {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={ (e) => { handleSubmit(e) }}>
       <label>
         Youtube Search:
         <input type="youtube-search" value={query} onChange={(e) => handleChange(e)} />
