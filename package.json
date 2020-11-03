@@ -4,7 +4,7 @@
   "description": "A hangout space for coders",
   "main": "server/index.js",
   "scripts": {
-    "start": "node server",
+    "start": "NODE_ENV=production node server",
     "build": "webpack",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -22,12 +22,16 @@
     "@babel/core": "^7.12.3",
     "@babel/preset-env": "^7.12.1",
     "@babel/preset-react": "^7.12.1",
+    "axios": "^0.21.0",
     "babel-loader": "^8.1.0",
     "express": "^4.17.1",
+    "google-auth-library": "^6.1.3",
+    "googleapis": "^62.0.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "socket.io": "^2.3.0",
     "socket.io-client": "^2.3.1",
+    "styled-components": "^5.2.1",
     "use-socket.io-client": "^1.1.0",
     "webpack": "^5.3.2"
   },
