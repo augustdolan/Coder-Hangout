@@ -6,7 +6,7 @@ import VideoPlayer from './VideoPlayer.jsx';
 import VideoList from './VideoList.jsx';
 import Messages from './Messages.jsx';
 import InputUsername from './InputUsername.jsx';
-const socket = io('http://localhost:3000');
+const socket = io();
 
 const ViewerExperienceFlex = styled.div`
   display: flex;
