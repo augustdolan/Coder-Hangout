@@ -14,7 +14,6 @@ const Messages = (props) => {
   const MessagesRef = useRef(null);
 
   const scrollToBottom = () => {
-    console.log('pinged')
     MessagesRef.current.scrollIntoView({ behavior: "smooth", block: "nearest" });
   }
 

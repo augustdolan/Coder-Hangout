@@ -13,6 +13,7 @@ const InputUsername = (props) => {
   const [ value, setValue ] = React.useState('');
 
   const handleSubmit = (e) => {
+    e.preventDefault();
     props.setUsername(value);
   }
 
