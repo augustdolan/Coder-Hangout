@@ -5,8 +5,7 @@ const io = require('socket.io')(http);
 const PORT = 3000;
 const axios = require('axios');
 const path = require('path');
-const API_KEY = require('../config.js')
-let youtubeVideos = require('../youtubeVideos.js')
+let youtubeVideos = require('../youtubeVideos.js');
 
 app.use(express.static(path.join(__dirname, '..', 'client', 'dist')))
 app.use(express.json())
@@ -27,6 +26,7 @@ io.on('connection', (socket) => {
     io.emit('current video', video)
   })
 })
+const API_KEY = require('../config.js')
 
 http.listen(PORT, () => {
   console.log(`server listening on port ${PORT}`)
@@ -37,7 +37,7 @@ app.get('/api/youtube', (req, res) => {
   axios.get('https://www.googleapis.com/youtube/v3/search', {
     params: {
       part: 'snippet',
-      key: API_KEY,
+      key: process.env.API_KEY,
       q: query
     }
   })
