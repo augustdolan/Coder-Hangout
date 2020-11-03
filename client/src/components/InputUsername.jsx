@@ -6,6 +6,7 @@ const CoverAll = styled.div`
   width: 100vw;
   z-index: 10;
   background-color: white;
+  position: absolute;
 `;
 
 const InputUsername = (props) => {

@@ -43,7 +43,6 @@ app.get('/api/youtube', (req, res) => {
     res.status(200).end();
   })
   .catch((err) => {
-    console.log(err);
     res.status(403).send('an error occurred querying youtube')
   })
 })
