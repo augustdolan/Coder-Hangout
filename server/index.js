@@ -26,7 +26,6 @@ io.on('connection', (socket) => {
     io.emit('current video', video)
   })
 })
-const API_KEY = require('../config.js')
 
 http.listen(PORT, () => {
   console.log(`server listening on port ${PORT}`)
