@@ -15,6 +15,7 @@ const VideoSearch = (props) => {
         query: query
       }
     })
+    setQuery('');
   }
 
   return (
