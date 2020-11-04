@@ -12,12 +12,13 @@ app.use(express.json())
 
 
 io.on('connection', (socket) => {
-  io.emit('chat message', 'Welcome to the hangout, enjoy your stay :)')
+  io.emit('chat message', 'Press play on youtube to start the shared experience!');
   io.emit('youtube videos', youtubeVideos)
   socket.on('chat message', (msg) => {
     io.emit('chat message', msg);
   })
   socket.on('disconnect', () => {
+    io.emit('chat message', 'smell ya later LOSER');
   })
   socket.on('current video', (video) => {
     io.emit('current video', video)
