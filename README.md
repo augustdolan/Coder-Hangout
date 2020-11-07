@@ -1,2 +1,2 @@
-# mvp
-This is a project I completed as a student at [hackreactor](http://hackreactor.com). This project was worked on with a pair.
+# Coder Hangout
+A post-COVID digital hangout spot to get together with friends and enjoy some time together.
